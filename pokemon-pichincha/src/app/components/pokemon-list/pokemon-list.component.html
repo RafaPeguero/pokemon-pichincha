@@ -1,1 +1,38 @@
-<p>pokemon-list works!</p>
+<div class="container">
+    <div class="header-table">
+        <form [formGroup]="searchForm">
+            <label>Listado de Pokemon</label>
+            <input type="text" formControlName="searchText" placeholder="Buscar">
+        </form>
+        <button (click)="showPokemonForm = true;">+ Nuevo</button>
+    </div>
+
+    <div *ngIf="showPokemonForm">
+        <app-pokemon-form [pokemon]="pokemon" (finishedTask)="childFinishedTask($event)"  ></app-pokemon-form>
+    </div>
+
+    <table class="table">
+        <tr>
+          <th>Nombre</th>
+          <th>Imagen</th>
+          <th>HP</th>
+          <th>Ataque</th>
+          <th>Defensa</th>
+          <th>Tipo</th>
+          <th>Acciones</th>
+        </tr>
+        <tr *ngFor="let p of allPokemons">
+          <td>{{p.name}}</td>
+          <td><img style="width: 40px; height: 40px;" [src]="p.image | imageNotFound" /></td>
+          <td>{{p.hp}}</td>
+          <td>{{p.attack}}</td>
+          <td>{{p.defense}}</td>
+          <td>{{p.type}}</td>
+          <td class="actions">
+            <span (click)="getPokemon(p.id)" ><img class="action-logo" [src]="'/assets/write.png'"/></span>
+            <span (click)="deletePokemon(p.id)" ><img class="action-logo" [src]="'/assets/trash.png'"/></span>
+          </td>
+        </tr>
+      </table>
+</div>
+

@@ -1,1 +1,43 @@
-<p>pokemon-form works!</p>
+<div class="form-container">
+    <form [formGroup]="pokemonForm" (ngSubmit)="addorEditPokemon()" style="background-color: white;"> 
+        <h4 style="text-align: center;">{{title}}</h4>
+        <div class="flex-container">
+            <div class="inputs-container">
+                <div>
+                    <label class="label">Nombre:</label>
+                    <input [ngClass]="pokemonForm.controls['name'].touched && pokemonForm.controls['name'].invalid ? 'form-error': ''" type="text" formControlName="name" placeholder="Nombre">
+                </div>
+                <br />
+                <div>
+                    <label class="label">Imagen:</label>
+                    <input type="text" formControlName="image" placeholder="Url">
+                </div>
+                <br />
+                <div>
+                    <label class="label">Tipo:</label>
+                    <select class="dropdown" formControlName="type">
+                        <option *ngFor="let t of validPokemonTypes" [value]="t.value">{{t.name}}</option>
+                      </select>
+                </div>
+            </div>
+            <div class="slidecontainer">
+                <div class="slider" >
+                    <p>Ataque: {{pokemonForm.get('attack')?.value}} </p>
+                    <input type="range" min="1" max="100" value="0" formControlName="attack" class="slider-form">
+                </div>
+                <div class="slider" >
+                    <p>Defensa: {{pokemonForm.get('defense')?.value}}</p>
+                    <input type="range" min="1" max="100" value="0" formControlName="defense" class="slider-form">
+                </div>
+                <div class="slider" >
+                    <p>HP: {{pokemonForm.get('hp')?.value}}</p>
+                    <input type="range" min="1" max="100" value="0" formControlName="hp" class="slider-form">
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="submit-btn" type="submit"><img class="btn-logo" [src]="'/assets/floppy-disk.png'" /> Guardar</button>
+            <button (click)="finishedTask.emit(false)" tybe="button"><img class="btn-logo" [src]="'/assets/x.png'" />Cancelar</button>
+        </div>
+    </form>
+</div>
